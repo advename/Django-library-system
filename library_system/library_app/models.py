@@ -21,3 +21,4 @@ class BookLoan(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - {self.user.username}"
+
