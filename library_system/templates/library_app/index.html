@@ -6,7 +6,7 @@
 <div id="items-list">
   <ul>
     {% for book in books %}
-    <li><a href="{% url "library_app:loan_item" "book" book.id %}"> {{book.title}} - {{book.author}}<a/></li>
+    <li><a href="{% url "user_app:loan_item" "book" book.id %}"> {{book.title}} - {{book.author}}<a/></li>
     {% endfor %}
   </ul>
 </div>
