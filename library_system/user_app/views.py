@@ -76,8 +76,8 @@ def return_item(request, type, id):
         book = get_object_or_404(Book, id=id)
 
         # Check if we currently have loaned the book? (This means we have it inside BookLoan and the returned_timestamp has no value)
-        booksloaned = (BookLoan.objects.filter(book=book) & BookLoan.objects.filter(
-            returned_timestamp__isnull=True)).count()
+        booksloaned = BookLoan.objects.filter(
+            book=book, returned_timestamp__isnull=True, user=request.user).count()
         if booksloaned > 0:
             # We are the ones who have loaned the requested book
             book.is_available = True
