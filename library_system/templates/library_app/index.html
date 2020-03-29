@@ -2,12 +2,33 @@
 
 <!-- Main body part -->
 {% block content %}
-<h1>Welcome to the Library System</h1>
+<h1>Available items</h1>
 <div id="items-list">
-  <ul>
-    {% for book in books %}
-    <li><a href="{% url "user_app:loan_item" "book" book.id %}"> {{book.title}} - {{book.author}}<a/></li>
-    {% endfor %}
-  </ul>
+  {% if items.count %}
+      <!-- Only display items when available -->
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publisher</th>
+        <th>Type</th>
+        <th>Action</th>
+      </tr>
+      {% for item in items %}
+      <tr>
+        <td>{{item.title}}</td>
+        <td>{{item.author}}</td>
+        <td>{{item.publisher}}</td>
+        <td>{{item.item_type|capfirst}}</td>
+        <td> <a href="{% url "user_app:loan_item" item.item_type item.id %}">LOAN</a> </td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <!--No items available, show message -->
+    <p>No items yet, loan one to see your loaned items.</p>
+  {% endif %}
+
+
 </div>
 {% endblock content %}

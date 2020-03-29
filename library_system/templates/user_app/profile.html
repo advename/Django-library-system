@@ -2,47 +2,37 @@
 
 <!-- Main page stuff -->
 {% block content %}
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
 
 <div>
   <h2>Welcome, {{user.username}}</h2>
   <div>
-    <table>
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Publisher</th>
-        <th>Returned</th>
-        <th>Days left</th>
-        <th>Manage</th>
-      </tr>
-      {% for bookloan in bookloans %}
-      <tr>
-        <td>{{bookloan.book.title}}</td>
-        <td>{{bookloan.book.author}}</td>
-        <td>{{bookloan.book.publisher}}</td>
-        <td>{% if bookloan.returned_timestamp == NULL  %} False  {% else %} True {% endif %} </td>
-        <td>{{bookloan.daysLeft}}</td>
-        <td> <a href="{% url "user_app:return_item" "book" bookloan.book.id %}">Return</a> </td>
-      </tr>
-      {% endfor %}
-    </table>
+    {% if itemloans.count %}
+      <!-- Only display items when there are items to display -->
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Publisher</th>
+          <th>Returned</th>
+          <th>Days left</th>
+          <th>Manage</th>
+        </tr>
+        {% for itemloan in itemloans %}
+        <tr>
+          <td>{{itemloan.item.title}}</td>
+          <td>{{itemloan.item.author}}</td>
+          <td>{{itemloan.item.publisher}}</td>
+          <td>{% if itemloan.returned_timestamp == NULL  %} False  {% else %} True {% endif %} </td>
+          <td>{{itemloan.daysLeft}}</td>
+          <td> <a href="{% url "user_app:return_item" itemloan.item.item_type itemloan.item.id %}">Return</a> </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <!--No items available, show message -->
+      <p>No items available.</p>
+    {% endif %}
   </div>
 </div>
 {% endblock content%}
