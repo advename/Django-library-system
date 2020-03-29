@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+# this is a core python tool, not from django
+from datetime import datetime, timedelta
 
 # Create your models here.
 
@@ -22,3 +24,8 @@ class BookLoan(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - {self.user.username}"
+
+    def daysLeft(self):
+        date_to_return = self.loaned_timestamp + timedelta(days=30)
+        days_left = (date_to_return - self.loaned_timestamp).days
+        return days_left
