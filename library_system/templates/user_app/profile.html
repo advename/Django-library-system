@@ -6,7 +6,7 @@
 
 <div>
   <h2>Welcome, {{user.username}}</h2>
-  <div>
+  <div class="profile-items">
     {% if itemloans.count %}
       <!-- Only display items when there are items to display -->
       <table>
@@ -15,6 +15,7 @@
           <th>Author</th>
           <th>Publisher</th>
           <th>Returned</th>
+          <th>Type</th>
           <th>Days left</th>
           <th>Manage</th>
         </tr>
@@ -23,9 +24,10 @@
           <td>{{itemloan.item.title}}</td>
           <td>{{itemloan.item.author}}</td>
           <td>{{itemloan.item.publisher}}</td>
-          <td>{% if itemloan.returned_timestamp == NULL  %} False  {% else %} True {% endif %} </td>
-          <td>{{itemloan.daysLeft}}</td>
-          <td> <a href="{% url "user_app:return_item" itemloan.item.item_type itemloan.item.id %}">Return</a> </td>
+          <td>{{ itemloan.is_available}}</td>
+          <td>{{ itemloan.item.item_type|capfirst }}</td>
+          <td>{% if itemloan.is_available %} {% else %} {{itemloan.daysLeft}} {% endif %}</td>
+          <td>{% if itemloan.is_available %} returned {% else %} <a href="{% url "user_app:return_item" itemloan.item.item_type itemloan.item.id %}">Return</a> {% endif %}  </td>
         </tr>
         {% endfor %}
       </table>
@@ -33,6 +35,19 @@
       <!--No items available, show message -->
       <p>No items available.</p>
     {% endif %}
+  </div>
+  <div class="profile-settings">
+  <br><br>
+    <h3>Change password </h3>
+    <br>
+    <form action="{% url "user_app:change_password" %}" method="POST">
+      {% csrf_token %}
+      <input type="password" name="old_password" placeholder="Old Password">
+      <input type="password" name="new_password1" placeholder="Password">
+      <input type="password" name="new_password2" placeholder="Confirm Password">
+      <button>Change Password</button>
+      {% if error_message %} <p>{{error_message}}</p> {% endif %}
+    </form>
   </div>
 </div>
 {% endblock content%}

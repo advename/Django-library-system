@@ -67,3 +67,10 @@ footer p {
   padding-top: 30px;
   text-align: center;
 }
+
+input,
+button {
+  padding: 5px;
+  display: block;
+  margin: 2px;
+}

@@ -6,6 +6,12 @@ from datetime import datetime, timedelta
 # Create your models here.
 
 
+items_days_limits = {
+    "book": 30,
+    "magazine": 7
+}
+
+
 class Item(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
@@ -33,9 +39,17 @@ class ItemLoan(models.Model):
         return f"{self.item.title} - {self.user.username}"
 
     def daysLeft(self):
-        date_to_return = self.loaned_timestamp + timedelta(days=30)
-        days_left = (date_to_return - self.loaned_timestamp).days
+        if self.item.item_type == "book":
+            date_to_return = self.loaned_timestamp + \
+                timedelta(days=items_days_limits['book'])
+            days_left = (date_to_return - self.loaned_timestamp).days
+        else:
+            date_to_return = self.loaned_timestamp + \
+                timedelta(days=items_days_limits['magazine'])
+            days_left = (date_to_return - self.loaned_timestamp).days
         return days_left
 
     def is_available(self):
-        return True if returned_timestamp != NULL else False
+        # is not -> different than, aka -> !=
+        # None is used to check if the value is NULL or not. You can't directly check on the value NULL using NULL.
+        return self.returned_timestamp is not None

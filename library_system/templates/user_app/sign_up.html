@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Login{% endblock title%} 
+
+
+<!-- Main page stuff -->
+{% block content %}
+<h1>Signup</h1>
+    <hr/>
+    <div>
+        <form action="{% url "user_app:sign_up" %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="confirm_password" placeholder="Confirm Password">
+            <button>Sign up</button>
+        </form>
+    </div>
+    <hr/>
+    {% if error_message %}<p>{{error_message}}</p> {% endif %}
+{% endblock content%}

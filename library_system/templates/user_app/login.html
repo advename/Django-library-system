@@ -11,4 +11,8 @@
   <button>Login</button>
 </form>
 {% if error_message %} <p>{{error_message}}</p> {% endif %}
+<br>
+<br>
+<p>No user account?</p>
+<a href="{% url "user_app:sign_up" %}">Sign up </a>
 {% endblock content%}

@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block title %}Administrator{% endblock title%}
+
+<!-- Main page stuff -->
+{% block content %}
+
+
+<div>
+  <h2>Administrator Page</h2>
+  <br>
+  <p>Here is an overview of not returned items</p>
+  <br><br>
+  <div class="profile-items">
+    {% if itemloans.count %}
+      <!-- Only display items when there are items to display -->
+      <table>
+        <tr>
+          <th>Loaned by</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Publisher</th>
+          <th>Days left</th>
+        </tr>
+        {% for itemloan in itemloans %}
+        <tr>
+          <td>{{itemloan.user.username}}</td>
+          <td>{{itemloan.item.title}}</td>
+          <td>{{itemloan.item.author}}</td>
+          <td>{{itemloan.item.publisher}}</td>
+          <td>{{itemloan.daysLeft}} </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <!--No items available, show message -->
+      <p>No items to return.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock content%}

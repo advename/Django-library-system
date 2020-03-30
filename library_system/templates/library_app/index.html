@@ -20,7 +20,7 @@
         <td>{{item.author}}</td>
         <td>{{item.publisher}}</td>
         <td>{{item.item_type|capfirst}}</td>
-        <td> <a href="{% url "user_app:loan_item" item.item_type item.id %}">LOAN</a> </td>
+        <td> <a href="{% url "user_app:loan_item" item.item_type item.id %}">Loan</a> </td>
       </tr>
       {% endfor %}
     </table>
